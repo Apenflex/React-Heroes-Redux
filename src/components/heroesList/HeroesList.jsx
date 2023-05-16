@@ -2,11 +2,13 @@ import { useHttp } from "../../hooks/http.hook";
 import { useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { toast } from "react-toastify";
 
 import { heroesFetching, heroesFetched, heroesFetchingError, heroDeleted } from "../../Redux/actions";
 import HeroesListItem from "../heroesListItem/HeroesListItem";
 import Spinner from "../spinner/Spinner";
 
+import "react-toastify/dist/ReactToastify.css";
 // Task for this component:
 // When you click on the "cross" icon, the character is removed from the overall state
 // Complex task:
@@ -22,6 +24,7 @@ const HeroesList = () => {
             try {
                 dispatch(heroesFetching());
                 const data = await request("http://localhost:3001/heroes");
+                // console.log(data)
                 dispatch(heroesFetched(data));
             } catch (err) {
                 dispatch(heroesFetchingError());
@@ -36,6 +39,7 @@ const HeroesList = () => {
                 await request(`http://localhost:3001/heroes/${id}`, "DELETE");
                 console.log("Deleted");
                 dispatch(heroDeleted(id));
+                toast.success("Hero deleted");
             } catch (err) {
                 console.log(err);
             }

@@ -2,9 +2,11 @@ import { useHttp } from "../../hooks/http.hook";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
+import { toast } from "react-toastify";
 
 import { heroCreated } from "../../Redux/actions";
 
+import "react-toastify/dist/ReactToastify.css";
 // Task for this component:
 // Implement the creation of a new hero with the entered data. It should be added
 // to the overall state and displayed in the list + filtered
@@ -38,6 +40,7 @@ const HeroesAddForm = () => {
             await request("http://localhost:3001/heroes", "POST", JSON.stringify(newHero));
             console.log("Created");
             dispatch(heroCreated(newHero));
+            toast.success("Hero created");
             setHeroName("");
             setHeroDescription("");
             setHeroElement("");
