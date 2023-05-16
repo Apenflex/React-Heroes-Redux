@@ -28,7 +28,7 @@ const HeroesFilters = () => {
             }
         };
         fetchData();
-    }, [dispatch]);
+    }, [dispatch, request]);
 
     if (filtersLoadingStatus === "loading") {
         return <Spinner />;
