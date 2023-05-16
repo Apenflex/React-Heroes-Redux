@@ -1,0 +1,43 @@
+{
+  "heroes": [
+    {
+      "id": "be49f0fb-898c-4e22-9a76-9e6b1e91e34f",
+      "name": "dsadd",
+      "description": "dsada",
+      "element": "fire"
+    },
+    {
+      "id": "15f97d1b-438b-424a-844c-6a88cd86b3a2",
+      "name": "Svyatoslav",
+      "description": "1",
+      "element": "water"
+    }
+  ],
+  "filters": [
+    {
+      "name": "all",
+      "label": "all",
+      "className": "btn-outline-dark"
+    },
+    {
+      "name": "fire",
+      "label": "Fire",
+      "className": "btn-danger"
+    },
+    {
+      "name": "water",
+      "label": "Water",
+      "className": "btn-primary"
+    },
+    {
+      "name": "wind",
+      "label": "Wind",
+      "className": "btn-success"
+    },
+    {
+      "name": "earth",
+      "label": "Earth",
+      "className": "btn-secondary"
+    }
+  ]
+}
