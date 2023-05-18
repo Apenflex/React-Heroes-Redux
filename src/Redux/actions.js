@@ -1,3 +1,13 @@
+export const fetchHeroes = (request) => async (dispatch) => {
+    try {
+        dispatch(heroesFetching());
+        const data = await request("http://localhost:3001/heroes");
+        dispatch(heroesFetched(data));
+    } catch (err) {
+        dispatch(heroesFetchingError());
+    }
+}
+
 export const heroesFetching = () => {
     return {
         type: 'HEROES_FETCHING'
@@ -14,6 +24,16 @@ export const heroesFetched = (heroes) => {
 export const heroesFetchingError = () => {
     return {
         type: 'HEROES_FETCHING_ERROR'
+    }
+}
+
+export const fetchFilters = (request) => async (dispatch) => {
+    try {
+        dispatch(filtersFetching());
+        const data = await request("http://localhost:3001/filters");
+        dispatch(filtersFetched(data));
+    } catch (err) {
+        dispatch(filtersFetchingError());
     }
 }
 
@@ -41,6 +61,7 @@ export const activeFilterChanged = (filter) => {
         type: 'ACTIVE_FILTER_CHANGED',
         payload: filter
     }
+
 }
 
 export const heroCreated = (hero) => {

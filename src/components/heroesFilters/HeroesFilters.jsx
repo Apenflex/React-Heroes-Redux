@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import classNames from 'classnames';
 
-import { filtersFetching, filtersFetched, filtersFetchingError, activeFilterChanged } from "../../Redux/actions";
+import { fetchFilters, activeFilterChanged } from "../../Redux/actions";
 import Spinner from "../spinner/Spinner";
 // Task for this component:
 // Filters should be generated based on the loaded data
@@ -13,22 +13,14 @@ import Spinner from "../spinner/Spinner";
 // Imagine that you have requested this from the backend developer
 
 const HeroesFilters = () => {
-    const { filters, filtersLoadingStatus, activeFilter } = useSelector((state) => state);
+    const { filters, filtersLoadingStatus, activeFilter } = useSelector((state) => state.filters);
     const dispatch = useDispatch();
     const { request } = useHttp();
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                dispatch(filtersFetching());
-                const data = await request("http://localhost:3001/filters");
-                dispatch(filtersFetched(data));
-            } catch (err) {
-                dispatch(filtersFetchingError());
-            }
-        };
-        fetchData();
-    }, [dispatch, request]);
+        dispatch(fetchFilters(request));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     if (filtersLoadingStatus === "loading") {
         return <Spinner />;

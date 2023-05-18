@@ -3,8 +3,9 @@ import { useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { toast } from "react-toastify";
+import { createSelector } from "reselect";
 
-import { heroesFetching, heroesFetched, heroesFetchingError, heroDeleted } from "../../Redux/actions";
+import { fetchHeroes, heroDeleted } from "../../Redux/actions";
 import HeroesListItem from "../heroesListItem/HeroesListItem";
 import Spinner from "../spinner/Spinner";
 
@@ -15,23 +16,28 @@ import "react-toastify/dist/ReactToastify.css";
 // Removal is done from the json file using the DELETE method
 
 const HeroesList = () => {
-    const { filteredHeroes, heroesLoadingStatus } = useSelector((state) => state);
+    const filteredHeroesSelector = createSelector(
+        (state) => state.filters.activeFilter,
+        (state) => state.heroes.heroes,
+        (activeFilter, heroes) => { 
+            if (activeFilter === "all") {
+                console.log("all")
+                return heroes;
+            } else {
+                return heroes.filter((hero) => hero.element === activeFilter);
+            }
+        }
+    )
+
+    const filteredHeroes = useSelector(filteredHeroesSelector);
+    const { heroesLoadingStatus } = useSelector((state) => state.heroes.heroesLoadingStatus);
     const dispatch = useDispatch();
     const { request } = useHttp();
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                dispatch(heroesFetching());
-                const data = await request("http://localhost:3001/heroes");
-                // console.log(data)
-                dispatch(heroesFetched(data));
-            } catch (err) {
-                dispatch(heroesFetchingError());
-            }
-        };
-        fetchData();
-    }, [dispatch]);
+        dispatch(fetchHeroes(request));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [request]);
     
     const onDelete = useCallback(
         async (id) => {
