@@ -1,11 +1,13 @@
 import { useHttp } from "../../hooks/http.hook";
 import { useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
+// import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { motion } from "framer-motion";
 import { toast } from "react-toastify";
-import { createSelector } from "reselect";
+import { createSelector } from "@reduxjs/toolkit";
 
-import { fetchHeroes, heroDeleted } from "../../Redux/actions";
+import { fetchHeroes, heroDeleted } from "./heroesSlice";
+
 import HeroesListItem from "../heroesListItem/HeroesListItem";
 import Spinner from "../spinner/Spinner";
 
@@ -21,7 +23,7 @@ const HeroesList = () => {
         (state) => state.heroes.heroes,
         (activeFilter, heroes) => { 
             if (activeFilter === "all") {
-                console.log("all")
+                // console.log("all")
                 return heroes;
             } else {
                 return heroes.filter((hero) => hero.element === activeFilter);
@@ -30,14 +32,14 @@ const HeroesList = () => {
     )
 
     const filteredHeroes = useSelector(filteredHeroesSelector);
-    const { heroesLoadingStatus } = useSelector((state) => state.heroes.heroesLoadingStatus);
+    const heroesLoadingStatus = useSelector((state) => state.heroes.heroesLoadingStatus);
     const dispatch = useDispatch();
     const { request } = useHttp();
 
     useEffect(() => {
-        dispatch(fetchHeroes(request));
+        dispatch(fetchHeroes());
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [request]);
+    }, []);
     
     const onDelete = useCallback(
         async (id) => {
@@ -47,6 +49,7 @@ const HeroesList = () => {
                 dispatch(heroDeleted(id));
                 toast.success("Hero deleted");
             } catch (err) {
+                toast.error("Error");
                 console.log(err);
             }
         },
@@ -62,31 +65,36 @@ const HeroesList = () => {
     const renderHeroesList = (arr) => {
         if (arr.length === 0) {
             return (
-                <CSSTransition
-                    timeout={0}
-                    classNames="hero">
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    >
                     <h5 className="text-center mt-5">No heroes yet</h5>
-                </CSSTransition>
+                </motion.div>
             )
         }
 
         return arr.map(({ id, ...props }) => {
             return (
-                <CSSTransition
+                <motion.li
                     key={id}
-                    timeout={500}
-                    classNames="hero">
+                    transition={{ delay: 0.5 }}
+                    initial={{ opacity: 0, y: 100 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 100 }}
+                    >
                     <HeroesListItem {...props} onDelete={() => onDelete(id)} />
-                </CSSTransition>
+                </motion.li>
             )
         });
     };
 
     const elements = renderHeroesList(filteredHeroes);
     return (
-        <TransitionGroup component="ul">
+        <ul>
             {elements}
-        </TransitionGroup>
+        </ul>
     )
 };
 

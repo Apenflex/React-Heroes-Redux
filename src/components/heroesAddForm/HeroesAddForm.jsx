@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import { toast } from "react-toastify";
 
-import { heroCreated } from "../../Redux/actions";
+import { heroCreated } from "../heroesList/heroesSlice";
 
 import "react-toastify/dist/ReactToastify.css";
 // Task for this component:

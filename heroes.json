@@ -1,28 +1,28 @@
 {
   "heroes": [
     {
-      "id": "a075dd5a-fbc4-471c-bc87-c22f262bf7f0",
-      "name": "Svyatoslav",
+      "id": "f5a7683d-e58f-4420-a559-f636c3ce6fcf",
+      "name": "1",
       "description": "1",
+      "element": "fire"
+    },
+    {
+      "id": "05774bd7-a526-4fd3-abe7-e8d27c2082a8",
+      "name": "2",
+      "description": "2",
       "element": "water"
     },
     {
-      "id": "6e802b01-09d4-42f7-96f7-a9d5d0413f8d",
-      "name": "Svyatoslav",
-      "description": "1",
+      "id": "fd1488e5-694b-4322-9cc6-cdf8e6c12587",
+      "name": "3",
+      "description": "3",
       "element": "wind"
     },
     {
-      "id": "224340d0-4b42-4fd0-b447-a8283fc2fbde",
-      "name": "earth",
-      "description": "11",
+      "id": "cd21c4b9-63e8-4b7d-b06b-b46ed6ddf497",
+      "name": "4",
+      "description": "4",
       "element": "earth"
-    },
-    {
-      "id": "8c939ae3-1372-4956-86fb-7608298a5675",
-      "name": "ds",
-      "description": "1234",
-      "element": "fire"
     }
   ],
   "filters": [

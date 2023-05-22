@@ -3,7 +3,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import classNames from 'classnames';
 
-import { fetchFilters, activeFilterChanged } from "../../Redux/actions";
+import { activeFilterChanged, fetchFilters } from "./filtersSlice";
+
 import Spinner from "../spinner/Spinner";
 // Task for this component:
 // Filters should be generated based on the loaded data
